@@ -8,6 +8,8 @@ package controller
 import (
 	"afcmo/config"
 	"afcmo/controller/nutrition"
+	"afcmo/controller/user"
+	"afcmo/controller/workout"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"html/template"
@@ -25,6 +27,8 @@ func Controllers(env *config.Env) http.Handler {
 	mux.Handle("/about", AboutHandler(env))
 
 	mux.Mount("/nutrition", nutrition.NutritionController(env))
+	mux.Mount("/workout", workout.WorkoutController(env))
+	mux.Mount("/user", user.UserController(env))
 	//mux.Mount("/gallery", gallery.GalleryController(env))
 	//mux.Mount("/workout", workout2.WorkoutController(env))
 	//mux.Mount("/nutrition", nutrition2.Controller(env))

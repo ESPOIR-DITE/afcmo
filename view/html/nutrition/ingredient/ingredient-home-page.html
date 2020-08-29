@@ -10,8 +10,10 @@
         name='viewport'/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-    <title>SB Admin 2 - Ingredient</title>
+    <title>AFCMO Admin 1 - Ingredient</title>
 
+    <!-- cutomer uploadfile field-->
+    <link href="../../../assets/css/customercss.css" rel="stylesheet">
 
   <meta charset="utf-8"/>
     <!-- Custom fonts for this template -->
@@ -54,14 +56,18 @@
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                 </div>
 
+
+
+
                 {{template "cards" .}}
 
+                {{template "notification" .}}
                 <!-- Register a new nitrution here -->
                 <div class="card shadow mb-4">
                     <!-- Card Header - Accordion -->
                     <a href="#collapseCardExample" class="d-block card-header py-3 btn-success" data-toggle="collapse"
                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        <h6 class="m-0 font-weight-bold " style="color: #0b0b0b">Create a new Collection</h6>
+                        <h6 class="m-0 font-weight-bold " style="color: #0b0b0b">Create a new Ingredient</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse " id="collapseCardExample">
@@ -71,42 +77,53 @@
                                 <div class="col-lg-12">
                                     <div class="p-5">
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">New Collection </h1>
+                                            <h1 class="h4 text-gray-900 mb-4">New Ingredient </h1>
                                         </div>
-                                        <form class="user" method="post" action="/admin_user/collection/create_stp1">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <label>Collection Name</label>
+                                        <form class="user" method="post" action="/nutrition/food/ingredient/create" enctype="multipart/form-data">
+                                            <div class="form-group ">
+                                                    <label>Ingredient Name</label>
                                                     <input type="text" class="form-control " id="exampleFirstName"
-                                                           name="collection_name" placeholder="">
+                                                           name="name" placeholder="" required>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <label>Collection type</label>
-                                                    <select name="collectionId" class="browser-default custom-select">
-                                                        <option selected>Choose a Collection Type</option>
-                                                        {{with .CollectionType}}
-                                                            {{range .}}
-                                                                <option value={{.Id}}>{{.Name}}</option>
-                                                            {{end}}
-                                                        {{end}}
-                                                    </select>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Upload File</label>
+                                                        <div class="preview-zone hidden">
+                                                            <div class="box box-solid">
+                                                                <div class="box-header with-border">
+                                                                    <div><b>Preview</b></div>
+                                                                    <div class="box-tools pull-right">
+                                                                        <button type="button" class="btn btn-danger btn-xs remove-preview">
+                                                                            <i class="fa fa-times"></i> Reset The Field
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="box-body"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropzone-wrapper">
+                                                            <div class="dropzone-desc">
+                                                                <i class="glyphicon glyphicon-download-alt"></i>
+                                                                <p>Choose an image file or drag it here.</p>
+                                                            </div>
+                                                            <input type="file" name="image" class="dropzone" required>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group ">
                                                 <label>Description <small> Only 150 characters </small></label>
-                                                <textarea class="form-control" name="brief" maxlength="200"></textarea>
+                                                <textarea class="form-control" name="brief" maxlength="200" required></textarea>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Collection detaille/History</label>
-                                                <textarea style="height: 200px" class="form-control " id="mytextare"
-                                                          name="history" placeholder="description"></textarea>
-                                            </div>
+
 
                                             <button type="submit" class="btn btn-primary  btn-block">
                                                 Next
                                             </button>
                                             <hr>
-                                            <a href="/admin_user" class="btn btn-google  btn-block">Cancel</a>
+                                            <a href="/" class="btn btn-google  btn-block">Cancel</a>
                                         </form>
                                         <hr>
                                     </div>
@@ -119,11 +136,6 @@
 
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For
-                    more information about DataTables, please visit the <a target="_blank"
-                                                                           href="https://datatables.net">official
-                        DataTables documentation</a>.</p>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -135,24 +147,32 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
+                                    <th>Nr</th>
                                     <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
+                                {{with .Ingredients}}
+                                {{range $i, $e := .}}
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
+                                    <td>{{$i}}</td>
+                                    <td>{{.Name}}</td>
+                                    <td>{{.Description}}</td>
+                                    <td><a href="/nutrition/food/ingredient/edit/{{.Id}}" class="btn btn-primary btn-user btn-block">
+                                            Edit
+                                        </a></td>
+                                    <td><a class="btn btn-danger btn-user btn-block text-white" data-toggle="modal"
+                                           onclick="deleteIngredientBTN({{.Id}},{{.Name}})"
+                                           data-target="#exampleModalIngredient">
+                                            Delete
+                                        </a></td>
                                 </tr>
+                                {{end}}
+                                {{end}}
                                 </tbody>
                             </table>
                         </div>
@@ -185,6 +205,29 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
+
+<!--Delete warning Modal -->
+<div class="modal fade" id="exampleModalIngredient" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-danger text-center"> About to delete the following Place</h3>
+                <h4 id="value" class="text-center"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id=""><a id="deleteBtn">Delete</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -222,7 +265,17 @@
 
 <!-- Page level custom scripts -->
 <script src="../../../assets/js/demo/datatables-demo.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+<!-- my customer js input file Js-->
+<script src="../../../assets/js/customerjs.js"></script>
 
 </body>
-
+<script>
+    function deleteIngredientBTN(id,name) {
+        $("#deleteBtn").attr('href','/nutrition/food/ingredient/delete/'+id);
+        $("#value").text(name);
+    }
+</script>
 </html>

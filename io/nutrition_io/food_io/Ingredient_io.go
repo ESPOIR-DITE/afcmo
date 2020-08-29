@@ -7,7 +7,7 @@ import (
 
 )
 
-const ingredientURL = api.BASE_URL + "nutrition/ "
+const ingredientURL = api.BASE_URL + "ingredient/"
 
 func CreateIngredient(nutritionObject nutrition.Ingredient) (nutrition.Ingredient, error) {
 	entity := nutrition.Ingredient{}
@@ -21,6 +21,20 @@ func CreateIngredient(nutritionObject nutrition.Ingredient) (nutrition.Ingredien
 	}
 	return entity, nil
 }
+
+func UpdateIngredient(nutritionObject nutrition.Ingredient) (nutrition.Ingredient, error) {
+	entity := nutrition.Ingredient{}
+	resp, _ := api.Rest().SetBody(nutritionObject).Post(ingredientURL + "update")
+	if resp.IsError() {
+		return entity, errors.New(resp.Status())
+	}
+	err := api.JSON.Unmarshal(resp.Body(), &entity)
+	if err != nil {
+		return entity, errors.New(resp.Status())
+	}
+	return entity, nil
+}
+
 func ReadIngredient(id string) (nutrition.Ingredient, error) {
 	entity := nutrition.Ingredient{}
 	resp, _ := api.Rest().Get(ingredientURL + "read?id=" + id)

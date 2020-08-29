@@ -7,7 +7,7 @@ import (
 
 )
 
-const nutritionVideoURL = api.BASE_URL + "nutrition/ "
+const nutritionVideoURL = api.BASE_URL + "nutrition/"
 
 func CreateNutritionVideo(nutritionObject nutrition.NutritionVideo) (nutrition.NutritionVideo, error) {
 	entity := nutrition.NutritionVideo{}

@@ -7,7 +7,7 @@ import (
 
 )
 
-const nutritionImageURL = api.BASE_URL + "nutrition/ "
+const nutritionImageURL = api.BASE_URL + "nutrition/"
 
 func CreateNutritionImage(image nutrition.NutritionImage) (nutrition.NutritionImage, error) {
 	entity := nutrition.NutritionImage{}

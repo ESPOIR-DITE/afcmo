@@ -23,6 +23,8 @@ func NutritionController(app *config.Env) http.Handler {
 	mux.Mount("/video", NutritionVideoController(app))
 	mux.Mount("/type", NutritionTypeController(app))
 	mux.Mount("/image", NutritionPlaneController(app))
+	mux.Mount("/plan", NutritionPlaneController(app))
+	mux.Mount("/subscription", NutritionSubscriptionController(app))
 
 	return mux
 }
